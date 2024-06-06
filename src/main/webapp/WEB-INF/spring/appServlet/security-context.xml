@@ -13,18 +13,19 @@
 <!--        </security:authentication-provider>-->
         <security:authentication-provider>
             <security:jdbc-user-service data-source-ref="dataSource"
-                   users-by-username-query="select username, password, enabled from users where username=?"
-                   authorities-by-username-query="select username, authority from authorities where username=?" />
+                                        users-by-username-query="select username, password, enabled from users where username=?"
+                                        authorities-by-username-query="select username, authority from authorities where username=?" />
         </security:authentication-provider>
     </security:authentication-manager>
 
     <security:http auto-config="true" use-expressions="true">
         <security:intercept-url pattern="/" access="permitAll()"/>
         <security:intercept-url pattern="/login" access="permitAll()"/>
-        <security:intercept-url pattern="/offers" access="permitAll()"/>
-        <security:intercept-url pattern="/createoffer" access="hasRole('ROLE_USER')"/>
-        <security:intercept-url pattern="/docreate" access="hasRole('ROLE_USER')"/>
         <security:intercept-url pattern="/resources/**" access="permitAll()"/>
+        <security:intercept-url pattern="/showRgCourse" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>
+        <security:intercept-url pattern="/showCourse" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>
+        <security:intercept-url pattern="/rgCourse" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>
+        <security:intercept-url pattern="/success" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>
         <security:intercept-url pattern="/**" access="denyAll()"/>
 
         <security:form-login login-page="/login"/>
